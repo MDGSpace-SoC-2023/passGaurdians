@@ -7,7 +7,7 @@ from django_resized import ResizedImageField
 def upload_to(inst,filename):
     return "/profile/"+str(filename)
 
-class user(AbstractUser):
+class User(AbstractUser):
     Username=models.CharField(max_length=100)
     profile_picture=ResizedImageField(upload_to=upload_to,null=True,blank=True)
     '''password=models.CharField(

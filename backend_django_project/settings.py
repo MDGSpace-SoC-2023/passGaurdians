@@ -27,7 +27,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTHENTICATION_BACKENDS=[
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
 
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,13 +48,13 @@ INSTALLED_APPS = [
     #restfulApp
     'rest_framework',
     #authApp
-    'rest_auth',
+    #'dj_rest_auth',
     'rest_framework.authtoken',
     #registration
     'django.contrib.sites',
     'allauth',
     'allauth.account',
-    'rest_auth.registration',
+    #'dj_rest_auth.registration',
     #socialauth
     'allauth.socialaccount',
     #googleauth
@@ -69,6 +75,20 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
 ]
 
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '123',
+            'secret': '456',
+            'key': ''
+        }
+    }
+}
+
 ROOT_URLCONF = 'backend_django_project.urls'
 
 TEMPLATES = [
@@ -82,6 +102,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -142,4 +163,13 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL='backend_django_app.user'
+AUTH_USER_MODEL='backend_django_app.User'
+
+ACCOUNT_AUTHENTICATION_METHOD='email'
+ACCOUNT_EMAIL_REQUIRED=True
+ACCOUNT_UNIQUE_EMAIL=True
+ACCOUNT_USERNAME_REQUIRED=False
+ACCOUNT_USER_MODEL_USERNAME_FIELD='email'
+ACCOUNT_USERNAME_REQUIRED=False
+ACCOUNT_EMAIL_VERIFICATION=None
+ACCOUNT_CONFIRM_EMAIL_ON_GET=False
