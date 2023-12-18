@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loginuicolors/auth_api.dart';
 
 class MyLogin extends StatefulWidget {
   const MyLogin({Key? key}) : super(key: key);
@@ -8,6 +9,8 @@ class MyLogin extends StatefulWidget {
 }
 
 class _MyLoginState extends State<MyLogin> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -88,8 +91,11 @@ class _MyLoginState extends State<MyLogin> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               TextButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(context, 'register');
+                                onPressed: () async {
+                                  if (await userlogin(emailController.text,
+                                      passwordController.text)){
+                                        Navigator.pushNamed(context, '');
+                                      }
                                 },
                                 child: Text(
                                   'Sign Up',

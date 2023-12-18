@@ -5,7 +5,7 @@ import 'package:loginuicolors/register.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: MyLogin(),
+    home: MyRegister(),
     routes: {
       'register': (context) => MyRegister(),
       'login': (context) => MyLogin(),
