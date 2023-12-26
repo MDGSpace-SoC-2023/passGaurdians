@@ -59,7 +59,7 @@ Future userregister(String email, String password) async {
 
   print(res.body);
   print(res.statusCode);
-  if (res.statusCode == 200) {
+  if (res.statusCode == (200 | 204)) {
     print("Registration Successful");
     return true;
   } else {

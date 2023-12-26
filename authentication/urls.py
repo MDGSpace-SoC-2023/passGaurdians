@@ -1,6 +1,7 @@
 from django.urls import path,include
-from dj_rest_auth.views import  LogoutView, UserDetailsView
-from .views import NewLoginView,NewRegisterView,get_csrf_token
+from .views import get_csrf_token, NewLoginView,NewRegisterView
+from dj_rest_auth.views import LoginView,LogoutView, UserDetailsView
+from dj_rest_auth.registration.views import RegisterView
 
 urlpatterns = [
     path('auth/', include('dj_rest_auth.urls')),
