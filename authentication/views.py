@@ -1,4 +1,4 @@
-from dj_rest_auth.views import LoginView,LogoutView, UserDetailsView
+from dj_rest_auth.views import LoginView
 from dj_rest_auth.registration.views import RegisterView
 from .serializers import NewLoginSerializer,NewRegisterSerializer
 from django.http import JsonResponse

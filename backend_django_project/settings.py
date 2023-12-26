@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'corsheaders',
     #localApp
     #'authentication',
-    'authentication.apps.AuthenticationConfig',
+    'authentication',
     #restfulApp
     'rest_framework',
     #authApp
@@ -194,6 +194,7 @@ ACCOUNT_UNIQUE_EMAIL=True
 ACCOUNT_USERNAME_REQUIRED=False
 ACCOUNT_USER_MODEL_USERNAME_FIELD=None
 ACCOUNT_USERNAME_REQUIRED=False
+#USERNAME_REQUIRED=False
+#EMAIL_REQUIRED=True
 ACCOUNT_EMAIL_VERIFICATION=None
 ACCOUNT_CONFIRM_EMAIL_ON_GET=False
-#DEBUG=False
