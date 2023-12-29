@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:loginuicolors/auth_api.dart';
-
+import 'auth_api.dart';
+import 'encryption.dart';
 class MyLogin extends StatefulWidget {
   const MyLogin({Key? key}) : super(key: key);
 
@@ -80,9 +80,12 @@ class _MyLoginState extends State<MyLogin> {
                                 child: IconButton(
                                     color: Colors.white,
                                     onPressed: () async {
+                                      final encryptedpass =
+                                          EncryptDecrypt.encryptAES(
+                                              passwordController.text);
                                       if (await userlogin(emailController.text,
-                                        passwordController.text)){
-                                        Navigator.pushNamed(context, '');
+                                        encryptedpass)){
+                                        Navigator.pushNamed(context, 'home');
                                       }
                                 },
                                     icon: Icon(
@@ -98,11 +101,7 @@ class _MyLoginState extends State<MyLogin> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               TextButton(
-                                onPressed: () async {
-                                  if (await userlogin(emailController.text,
-                                      passwordController.text)){
-                                        Navigator.pushNamed(context, '');
-                                      }
+                                onPressed: () { Navigator.pushNamed(context, 'register');
                                 },
                                 child: Text(
                                   'Sign Up',

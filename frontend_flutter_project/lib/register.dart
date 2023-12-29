@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loginuicolors/auth_api.dart';
+import 'package:loginuicolors/encryption.dart';
 //import 'package:loginuicolors/login.dart';
 
 class MyRegister extends StatefulWidget {
@@ -133,11 +134,15 @@ class _MyRegisterState extends State<MyRegister> {
                                 child: IconButton(
                                     color: Colors.white,
                                     onPressed: () async {
-                                      if (await userregister(emailController.text,
-                                        passwordController.text)){
+                                      final encryptedpass =
+                                          EncryptDecrypt.encryptAES(
+                                              passwordController.text);
+                                      if (await userregister(
+                                          emailController.text,
+                                          encryptedpass)) {
                                         Navigator.pushNamed(context, 'login');
                                       }
-                                },
+                                    },
                                     icon: Icon(
                                       Icons.arrow_forward,
                                     )),
