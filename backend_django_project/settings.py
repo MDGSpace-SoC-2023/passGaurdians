@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     #localApp
-    #'authentication',
+    'PasswordStorageApp',
     'authentication',
     #restfulApp
     'rest_framework',

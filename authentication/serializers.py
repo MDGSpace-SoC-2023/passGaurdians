@@ -25,25 +25,6 @@ class NewRegisterSerializer(RegisterSerializer):
     password1 = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
 
-    """def custom_signup(self,request,user):
-        user.first_name=request.data['first_name']
-        user.last_name=request.data['last_name']"""
-    """def save(self, request):
-        adapter = get_adapter()
-        user = adapter.new_user(request)
-        self.cleaned_data = self.get_cleaned_data()
-        user = adapter.save_user(request, user, self, commit=False)
-        if "password1" in self.cleaned_data:
-            try:
-                adapter.clean_password(self.cleaned_data['password1'], user=user)
-            except DjangoValidationError as exc:
-                raise serializers.ValidationError(
-                    detail=serializers.as_serializer_error(exc)
-                )
-        user.save()
-        self.custom_signup(request, user)
-        setup_user_email(request, user, [])
-        return user"""
         
         
 
