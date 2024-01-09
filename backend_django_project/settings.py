@@ -25,9 +25,15 @@ SECRET_KEY = 'django-insecure-pvujlz+e%-au32pun5+67l!1^05ftt(_=92r5^ksm81_ienncd
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1","localhost"]
 
+AUTHENTICATION_BACKENDS=[
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
 
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,22 +43,39 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     #localApp
-    'backend_django_app',
+    #'authentication',
+    'authentication',
     #restfulApp
     'rest_framework',
     #authApp
-    'rest_auth',
+    'dj_rest_auth',
     'rest_framework.authtoken',
     #registration
     'django.contrib.sites',
     'allauth',
     'allauth.account',
-    'rest_auth.registration',
+    'dj_rest_auth.registration',
     #socialauth
     'allauth.socialaccount',
     #googleauth
     'allauth.socialaccount.providers.google',
+]
+
+REST_AUTH={
+    'LOGIN_SERIALIZER': 'authentication.serializers.NewLoginSerializer',
+    'REGISTER_SERIALIZER': 'authentication.serializers.NewRegisterSerializer',
+}
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",
+    ]
+}
+
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:8000",  
 ]
 
 SITE_ID = 1
@@ -65,9 +88,29 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     #middleware
     'allauth.account.middleware.AccountMiddleware',
 ]
+
+CSRF_COOKIE_SECURE = True
+
+CSRF_COOKIE_NAME = 'csrftoken'
+
+
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '123',
+            'secret': '456',
+            'key': ''
+        }
+    }
+}
 
 ROOT_URLCONF = 'backend_django_project.urls'
 
@@ -82,6 +125,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -142,4 +186,15 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL='backend_django_app.user'
+AUTH_USER_MODEL='authentication.User'
+
+ACCOUNT_AUTHENTICATION_METHOD='email'
+ACCOUNT_EMAIL_REQUIRED=True
+ACCOUNT_UNIQUE_EMAIL=True
+ACCOUNT_USERNAME_REQUIRED=False
+ACCOUNT_USER_MODEL_USERNAME_FIELD=None
+ACCOUNT_USERNAME_REQUIRED=False
+#USERNAME_REQUIRED=False
+#EMAIL_REQUIRED=True
+ACCOUNT_EMAIL_VERIFICATION=None
+ACCOUNT_CONFIRM_EMAIL_ON_GET=False

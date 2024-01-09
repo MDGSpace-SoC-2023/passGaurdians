@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:loginuicolors/auth_api.dart';
+import 'package:loginuicolors/encryption.dart';
+//import 'package:loginuicolors/login.dart';
 
 class MyRegister extends StatefulWidget {
   const MyRegister({Key? key}) : super(key: key);
@@ -8,12 +11,13 @@ class MyRegister extends StatefulWidget {
 }
 
 class _MyRegisterState extends State<MyRegister> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
         appBar: AppBar(
-          
           elevation: 0,
         ),
         body: Stack(
@@ -22,7 +26,10 @@ class _MyRegisterState extends State<MyRegister> {
               padding: EdgeInsets.only(left: 35, top: 30),
               child: Text(
                 'Create\nAccount',
-                style: TextStyle(color: Colors.black, fontSize: 33, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 33,
+                    fontWeight: FontWeight.bold),
               ),
             ),
             SingleChildScrollView(
@@ -36,7 +43,7 @@ class _MyRegisterState extends State<MyRegister> {
                       margin: EdgeInsets.only(left: 35, right: 35),
                       child: Column(
                         children: [
-                          TextField(
+                          /*TextField(
                             style: TextStyle(color: Colors.black),
                             decoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
@@ -56,11 +63,12 @@ class _MyRegisterState extends State<MyRegister> {
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 )),
-                          ),
+                          ),*/
                           SizedBox(
                             height: 30,
                           ),
                           TextField(
+                            controller: emailController,
                             style: TextStyle(color: Colors.black),
                             decoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
@@ -85,6 +93,7 @@ class _MyRegisterState extends State<MyRegister> {
                             height: 30,
                           ),
                           TextField(
+                            controller: passwordController,
                             style: TextStyle(color: Colors.black),
                             obscureText: true,
                             decoration: InputDecoration(
@@ -124,7 +133,16 @@ class _MyRegisterState extends State<MyRegister> {
                                 backgroundColor: Color(0xff4c505b),
                                 child: IconButton(
                                     color: Colors.white,
-                                    onPressed: () {},
+                                    onPressed: () async {
+                                      final encryptedpass =
+                                          EncryptDecrypt.encryptAES(
+                                              passwordController.text);
+                                      if (await userregister(
+                                          emailController.text,
+                                          encryptedpass)) {
+                                        Navigator.pushNamed(context, 'login');
+                                      }
+                                    },
                                     icon: Icon(
                                       Icons.arrow_forward,
                                     )),
