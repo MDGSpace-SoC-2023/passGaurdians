@@ -82,7 +82,7 @@ class _MyLoginState extends State<MyLogin> {
                                     onPressed: () async {
                                       final encryptedpass =
                                           EncryptDecrypt.encryptAES(
-                                              passwordController.text);
+                                              passwordController.text).base64;
                                       if (await userlogin(emailController.text,
                                         encryptedpass)){
                                         Navigator.pushNamed(context, 'home');

@@ -136,7 +136,7 @@ class _MyRegisterState extends State<MyRegister> {
                                     onPressed: () async {
                                       final encryptedpass =
                                           EncryptDecrypt.encryptAES(
-                                              passwordController.text);
+                                              passwordController.text).base64;
                                       if (await userregister(
                                           emailController.text,
                                           encryptedpass)) {

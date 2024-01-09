@@ -14,7 +14,7 @@ Future getCsrfToken() async {
   }
 }
 
-Future userlogin(String email, String password) async {
+Future userlogin(String email, dynamic password) async {
   var uriLogin = Uri.parse("http://127.0.0.1:8000/user/login/");
   String csrfToken = await getCsrfToken();
   var res = await http.post(uriLogin,
@@ -39,7 +39,7 @@ Future userlogin(String email, String password) async {
   }
 }
 
-Future userregister(String email, String password) async {
+Future userregister(String email, dynamic password) async {
   var uriRegister = Uri.parse("http://127.0.0.1:8000/user/register/");
   String csrfToken = await getCsrfToken();
   print(csrfToken);

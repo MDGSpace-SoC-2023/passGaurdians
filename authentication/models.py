@@ -22,3 +22,5 @@ class User(AbstractUser):
     password=models.CharField(max_length=128#,validators=[MinLengthValidator(limit_value=8,message="Password must be atleast 8 characters long.")]
                               )
    
+class PaswordStorage():
+    title=models.CharField(max_length=100,null=False)
