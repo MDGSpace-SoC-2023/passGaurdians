@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loginuicolors/password_details.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -13,7 +14,9 @@ class _MyHomeState extends State<MyHomePage> {
     TextEditingController titleController = TextEditingController();
     TextEditingController usernameController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
+    TextEditingController websiteController = TextEditingController();
     TextEditingController notesController = TextEditingController();
+    
 
     showDialog(
       context: context,
@@ -35,6 +38,10 @@ class _MyHomeState extends State<MyHomePage> {
                 decoration: InputDecoration(labelText: 'Password'),
               ),
               TextField(
+                controller: websiteController,
+                decoration: InputDecoration(labelText: 'Website'),
+              ),
+              TextField(
                 controller: notesController,
                 decoration: InputDecoration(labelText: 'Notes'),
               ),
@@ -49,6 +56,7 @@ class _MyHomeState extends State<MyHomePage> {
                       title: titleController.text,
                       username: usernameController.text,
                       password: passwordController.text,
+                      website: websiteController.text,
                       notes: notesController.text,
                     ),
                   );
@@ -73,10 +81,20 @@ class _MyHomeState extends State<MyHomePage> {
         itemCount: passwordList.length,
         itemBuilder: (context, index) {
           PasswordItem item = passwordList[index];
-          return ListTile(
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PasswordDetailsPage(passwordItem: PasswordItem),
+                  ),
+                  );
+            }
+          );
+          child: ListTile(
             title: Text(item.title),
             subtitle: Text(item.username),
-            // Add more details or customize the appearance as needed
+
           );
         },
       ),
@@ -92,7 +110,8 @@ class PasswordItem {
   String title;
   String username;
   String password;
+  String website;
   String notes;
 
-  PasswordItem({required this.title, required this.username, required this.password, required this.notes});
+  PasswordItem({required this.title, required this.username, required this.password, required this.website, required this.notes});
 }
