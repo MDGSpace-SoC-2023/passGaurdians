@@ -19,6 +19,5 @@ class User(AbstractUser):
     USERNAME_FIELD='email'
     REQUIRED_FIELDS=[]
     profile_picture=ResizedImageField(upload_to=upload_to,null=True,blank=True)
-    password=models.CharField(max_length=128#,validators=[MinLengthValidator(limit_value=8,message="Password must be atleast 8 characters long.")]
-                              )
+    password=models.CharField(max_length=128)
    

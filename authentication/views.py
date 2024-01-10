@@ -17,4 +17,3 @@ def get_csrf_token(request):
     response['X-CSRFToken'] = csrf_token  # Set the CSRF token in the response header
     return response
 
-

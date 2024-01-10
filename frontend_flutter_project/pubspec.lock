@@ -77,10 +77,10 @@ packages:
     dependency: "direct main"
     description:
       name: cupertino_icons
-      sha256: "486b7bc707424572cdf7bd7e812a0c146de3fd47ecadf070254cc60383f21dd8"
+      sha256: d57953e10f9f8327ce64a508a355f0b1ec902193f66288e8cb5070e7c47eeb2d
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.3"
+    version: "1.0.6"
   encrypt:
     dependency: "direct main"
     description:
@@ -111,10 +111,10 @@ packages:
     dependency: "direct main"
     description:
       name: http
-      sha256: "759d1a329847dd0f39226c688d3e06a6b8679668e350e2891a6474f8b4bb8525"
+      sha256: d4872660c46d929f6b8a9ef4e7a7eff7e49bbf0c4ec3f385ee32df5119175139
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.0"
+    version: "1.1.2"
   http_parser:
     dependency: transitive
     description:
@@ -249,4 +249,8 @@ packages:
     source: hosted
     version: "0.3.0"
 sdks:
+<<<<<<< HEAD
   dart: ">=3.2.0-194.0.dev <4.0.0"
+=======
+  dart: ">=3.2.0 <4.0.0"
+>>>>>>> e0b2facd06e32de3a5785fe251eaaa14c164f6e2
