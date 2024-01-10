@@ -71,40 +71,42 @@ class _MyHomeState extends State<MyHomePage> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Password App'),
-      ),
-      body: ListView.builder(
-        itemCount: passwordList.length,
-        itemBuilder: (context, index) {
-          PasswordItem item = passwordList[index];
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PasswordDetailsPage(passwordItem: PasswordItem),
-                  ),
-                  );
-            }
-          );
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: Text('Password App'),
+    ),
+    body: ListView.builder(
+      itemCount: passwordList.length,
+      itemBuilder: (context, index) {
+        PasswordItem item = passwordList[index];
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PasswordDetailsPage(passwordItem: item),
+              ),
+            );
+          },
           child: ListTile(
             title: Text(item.title),
             subtitle: Text(item.username),
-
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _showAddPasswordDialog,
-        child: Icon(Icons.add),
-      ),
-    );
-  }
+            // Add more details or customize the appearance as needed
+          ),
+        );
+      },
+    ),
+    floatingActionButton: FloatingActionButton(
+      onPressed: _showAddPasswordDialog,
+      child: Icon(Icons.add),
+    ),
+  );
 }
+}
+
+
 
 class PasswordItem {
   String title;
@@ -114,4 +116,5 @@ class PasswordItem {
   String notes;
 
   PasswordItem({required this.title, required this.username, required this.password, required this.website, required this.notes});
+}
 }

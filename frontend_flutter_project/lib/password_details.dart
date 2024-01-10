@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'homepage.dart';
 
 class PasswordDetailsPage extends StatelessWidget {
-  final passwordItem passwordItem;
+  final PasswordItem passwordItem;
 
   PasswordDetailsPage({required this.passwordItem});
 
