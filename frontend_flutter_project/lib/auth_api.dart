@@ -14,6 +14,8 @@ Future getCsrfToken() async {
   }
 }
 
+//Future passVerify(String password){}
+
 Future userlogin(String email, dynamic password) async {
   var uriLogin = Uri.parse("http://127.0.0.1:8000/user/login/");
   String csrfToken = await getCsrfToken();

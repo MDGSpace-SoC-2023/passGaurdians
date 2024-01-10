@@ -6,7 +6,7 @@ import 'homepage.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: MyRegister(),
+    home: MyHomePage(),
     routes: {
       'register': (context) => MyRegister(),
       'login': (context) => MyLogin(),
