@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'login.dart';
-import 'register.dart';
-import 'homepage.dart';
+import 'screens/login.dart';
+import 'screens/register.dart';
+import 'screens/homepage.dart';
 
 void main() {
   runApp(MaterialApp(

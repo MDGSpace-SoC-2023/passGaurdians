@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:loginuicolors/password_details.dart';
+import 'package:loginuicolors/screens/password_details.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);

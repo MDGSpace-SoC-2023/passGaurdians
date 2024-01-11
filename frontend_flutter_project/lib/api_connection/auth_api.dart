@@ -2,8 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-String token = "";
-Future getCsrfToken() async {
+Future getCsrfTokenUser() async {
   var uri = Uri.parse("http://127.0.0.1:8000/user/get-csrf-token/");
   var response = await http.get(uri);
 
@@ -18,7 +17,7 @@ Future getCsrfToken() async {
 
 Future userlogin(String email, dynamic password) async {
   var uriLogin = Uri.parse("http://127.0.0.1:8000/user/login/");
-  String csrfToken = await getCsrfToken();
+  String csrfToken = await getCsrfTokenUser();
   var res = await http.post(uriLogin,
       body: jsonEncode({
         'email': email,
@@ -43,7 +42,7 @@ Future userlogin(String email, dynamic password) async {
 
 Future userregister(String email, dynamic password) async {
   var uriRegister = Uri.parse("http://127.0.0.1:8000/user/register/");
-  String csrfToken = await getCsrfToken();
+  String csrfToken = await getCsrfTokenUser();
   print(csrfToken);
   print(email);
   print(password);
@@ -69,3 +68,4 @@ Future userregister(String email, dynamic password) async {
     return false;
   }
 }
+
