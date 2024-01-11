@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loginuicolors/screens/password_details.dart';
+import 'package:loginuicolors/api_connection/passwordStorage_api.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -47,19 +48,28 @@ class _MyHomeState extends State<MyHomePage> {
           ),
           actions: [
             ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  passwordList.add(
-                    PasswordItem(
-                      title: titleController.text,
-                      username: usernameController.text,
-                      password: passwordController.text,
-                      website: websiteController.text,
-                      notes: notesController.text,
-                    ),
+              onPressed: () async {
+                if (await ListCreate(
+                    titleController.text,
+                    usernameController.text,
+                    passwordController.text,
+                    websiteController.text,
+                    notesController.text)) {
+                  setState(
+                    () {
+                      passwordList.add(
+                        PasswordItem(
+                          title: titleController.text,
+                          username: usernameController.text,
+                          password: passwordController.text,
+                          website: websiteController.text,
+                          notes: notesController.text,
+                        ),
+                      );
+                    },
                   );
-                });
-                Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                }
               },
               child: Text('Add'),
             ),

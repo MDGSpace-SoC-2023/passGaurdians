@@ -31,7 +31,7 @@ Future userlogin(String email, dynamic password) async {
 
   print(res.body);
   print(res.statusCode);
-  if (res.statusCode == 200) {
+  if ((res.statusCode == 200)||(res.statusCode == 201)||(res.statusCode == 202)||(res.statusCode == 203)||(res.statusCode == 204)) {
     print("Login Successful");
     return true;
   } else {
@@ -60,7 +60,7 @@ Future userregister(String email, dynamic password) async {
 
   print(res.body);
   print(res.statusCode);
-  if (res.statusCode == (200 | 204)) {
+  if ((res.statusCode == 200)||(res.statusCode == 201)||(res.statusCode == 202)||(res.statusCode == 203)||(res.statusCode == 204)) {
     print("Registration Successful");
     return true;
   } else {
