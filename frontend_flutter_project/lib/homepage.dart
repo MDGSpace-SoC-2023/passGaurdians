@@ -117,4 +117,3 @@ class PasswordItem {
 
   PasswordItem({required this.title, required this.username, required this.password, required this.website, required this.notes});
 }
-}

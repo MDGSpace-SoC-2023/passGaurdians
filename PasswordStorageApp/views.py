@@ -1,10 +1,11 @@
-from typing import Any
-from django.shortcuts import render
 from .serializers import PasswordStorageSerializer
-from django.views import View
-from django.http import HttpResponse
+from .models import PasswordStorage
+from rest_framework import generics
 # Create your views here.
-class PasswordStorageView(View):
+
+
+class PasswordStorageView(generics.ListCreateAPIView):
     serializer_class=PasswordStorageSerializer
-    def get(request , *args , **kwargs):
-        return HttpResponse
+    queryset=PasswordStorage.objects.all()
+
+
