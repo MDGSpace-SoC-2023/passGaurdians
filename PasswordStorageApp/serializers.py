@@ -12,3 +12,4 @@ class PasswordStorageSerializer(serializers.ModelSerializer):
     details=serializers.CharField(max_length= 300,required=False)
 """
 
+
