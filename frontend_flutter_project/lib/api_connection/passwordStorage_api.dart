@@ -13,8 +13,8 @@ Future getCsrfTokenPasswordStorage() async {
   }
 }
 
-Future ListCreate(String title, String username, dynamic password,
-    String website, String details) async {
+Future Create(String title, String username, dynamic password, String website,
+    String details) async {
   var uriListCreate =
       Uri.parse("http://127.0.0.1:8000/passwordStorageApp/passwordStorage/");
   String csrfToken = await getCsrfTokenPasswordStorage();
@@ -34,7 +34,11 @@ Future ListCreate(String title, String username, dynamic password,
 
   print(res.body);
   print(res.statusCode);
-  if ((res.statusCode == 200)||(res.statusCode == 201)||(res.statusCode == 202)||(res.statusCode == 203)||(res.statusCode == 204)) {
+  if ((res.statusCode == 200) ||
+      (res.statusCode == 201) ||
+      (res.statusCode == 202) ||
+      (res.statusCode == 203) ||
+      (res.statusCode == 204)) {
     print("Suceesful");
     return true;
   } else {
@@ -43,19 +47,22 @@ Future ListCreate(String title, String username, dynamic password,
   }
 }
 
-Future Update(int pk,String title, String username, dynamic password,
+Future Update(int pk, String title, String username, dynamic password,
     String website, String details) async {
-  var uriUpdate = Uri.parse("http://127.0.0.1:8000/passwordStorageApp/$pk/update");
+  var uriUpdate =
+      Uri.parse("http://127.0.0.1:8000/passwordStorageApp/$pk/update");
   String csrfToken = await getCsrfTokenPasswordStorage();
   print(csrfToken);
   var res = await http.post(uriUpdate,
-      body: jsonEncode({
-        "title": title,
-        "username": username,
-        "password": password,
-        "website": website,
-        "details": details,
-      },),
+      body: jsonEncode(
+        {
+          "title": title,
+          "username": username,
+          "password": password,
+          "website": website,
+          "details": details,
+        },
+      ),
       headers: {
         //"Referer": "http://127.0.0.1:8000",
         "X-CSRFToken": csrfToken,
@@ -64,11 +71,31 @@ Future Update(int pk,String title, String username, dynamic password,
 
   print(res.body);
   print(res.statusCode);
-  if ((res.statusCode == 200)||(res.statusCode == 201)||(res.statusCode == 202)||(res.statusCode == 203)||(res.statusCode == 204)) {
+  if ((res.statusCode == 200) ||
+      (res.statusCode == 201) ||
+      (res.statusCode == 202) ||
+      (res.statusCode == 203) ||
+      (res.statusCode == 204)) {
     print("Successful");
     return true;
   } else {
     print("Some Error Occured. Access is denied");
     return false;
+  }
+}
+
+Future ListPasswords() async {
+  var uri =
+      Uri.parse("http://127.0.0.1:8000/passwordStorageApp/passwordStorage/");
+  var response = await http.get(uri);
+ 
+   var data = json.decode(response.body);
+    print(data);
+
+  if (response.statusCode == 200) {
+    print("Successful");
+    return data;
+  } else {
+    print("Some error occured. Access is denied.");
   }
 }

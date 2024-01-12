@@ -10,6 +10,36 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomeState extends State<MyHomePage> {
   List<PasswordItem> passwordList = [];
+  bool isloading = true;
+  
+  @override
+  void initState() {
+    super.initState();
+    print("inside initstate");
+    fetchdata();
+  }
+
+  void fetchdata() async {
+    List data = await ListPasswords();
+    data.forEach(
+      (pass) {
+        PasswordItem p = PasswordItem(
+          title: pass['title'],
+          username: pass['username'],
+          password: pass['password'],
+          website: pass['website'],
+          notes: pass['details'],
+        );
+        passwordList.add(p);
+      },
+    );
+    setState(
+      () {
+        isloading = false;
+      },
+    );
+  }
+
   void _showAddPasswordDialog() {
     TextEditingController titleController = TextEditingController();
     TextEditingController usernameController = TextEditingController();
@@ -49,7 +79,7 @@ class _MyHomeState extends State<MyHomePage> {
           actions: [
             ElevatedButton(
               onPressed: () async {
-                if (await ListCreate(
+                if (await Create(
                     titleController.text,
                     usernameController.text,
                     passwordController.text,
@@ -85,27 +115,32 @@ class _MyHomeState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text('Password App'),
       ),
-      body: ListView.builder(
-        itemCount: passwordList.length,
-        itemBuilder: (context, index) {
-          PasswordItem item = passwordList[index];
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PasswordDetailsPage(passwordItem: item),
-                ),
-              );
-            },
-            child: ListTile(
-              title: Text(item.title),
-              subtitle: Text(item.username),
-              // Add more details or customize the appearance as needed
+      body: isloading
+          ? CircularProgressIndicator()
+          : ListView.builder(
+              itemCount: passwordList.length,
+              itemBuilder: (context, index) {
+                PasswordItem item = passwordList[index];
+                return ListTile(
+                  leading: CircleAvatar(
+                    child: Text(passwordList[index].title[0]),
+                  ),
+                  title: Text(
+                    passwordList[index].title,
+                  ),
+                  subtitle: Text(passwordList[index].username),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            PasswordDetailsPage(passwordItem: item),
+                      ),
+                    );
+                  },
+                );
+              },
             ),
-          );
-        },
-      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _showAddPasswordDialog,
         child: Icon(Icons.add),
