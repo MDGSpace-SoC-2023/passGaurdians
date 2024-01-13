@@ -80,11 +80,12 @@ class _MyLoginState extends State<MyLogin> {
                                 child: IconButton(
                                     color: Colors.white,
                                     onPressed: () async {
-                                      final encryptedpass =
+                                      /*final encryptedpass =
                                           EncryptDecrypt.encryptAES(
-                                              passwordController.text).base64;
+                                              passwordController.text).base64;*/
                                       if (await userlogin(emailController.text,
-                                        encryptedpass)){
+                                        //encryptedpass
+                                        passwordController.text)){
                                         Navigator.pushNamed(context, 'home');
                                       }
                                 },

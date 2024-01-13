@@ -134,12 +134,13 @@ class _MyRegisterState extends State<MyRegister> {
                                 child: IconButton(
                                     color: Colors.white,
                                     onPressed: () async {
-                                      final encryptedpass =
+                                      /*final encryptedpass =
                                           EncryptDecrypt.encryptAES(
-                                              passwordController.text).base64;
+                                              passwordController.text).base64;*/
                                       if (await userregister(
                                           emailController.text,
-                                          encryptedpass)) {
+                                          //encryptedpass
+                                          passwordController.text)) {
                                         Navigator.pushNamed(context, 'login');
                                       }
                                     },

@@ -13,6 +13,17 @@ Future getCsrfTokenPasswordStorage() async {
   }
 }
 
+Future getToken() async {
+  var uri = Uri.parse("http://127.0.0.1:8000/user/token/");
+  var response = await http.get(uri);
+
+  if (response.statusCode == 200) {
+    return response.headers['Token'] ?? "";
+  } else {
+    throw Exception('Failed to get Token');
+  }
+}
+
 Future Create(String title, String username, dynamic password, String website,
     String details) async {
   var uriListCreate =
@@ -87,10 +98,14 @@ Future Update(int pk, String title, String username, dynamic password,
 Future ListPasswords() async {
   var uri =
       Uri.parse("http://127.0.0.1:8000/passwordStorageApp/passwordStorage/");
-  var response = await http.get(uri);
- 
-   var data = json.decode(response.body);
-    print(data);
+
+  String csrfToken = await getCsrfTokenPasswordStorage();
+  String Token = await getToken();
+  var headers = {'Authorization': 'Bearer $Token'};
+  var response = await http.get(uri, headers: headers);
+
+  var data = json.decode(response.body);
+  print(data);
 
   if (response.statusCode == 200) {
     print("Successful");
