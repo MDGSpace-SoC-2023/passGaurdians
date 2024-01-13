@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loginuicolors/password_details.dart';
+import 'dart:math';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -16,7 +17,24 @@ class _MyHomeState extends State<MyHomePage> {
     TextEditingController passwordController = TextEditingController();
     TextEditingController websiteController = TextEditingController();
     TextEditingController notesController = TextEditingController();
-    
+
+    //ignore: unused_element
+    String generateRandomPassword() {
+      final random = Random();
+      final capitalLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      final smallLetters = "abcdefghijklmnopqrstuvwxyz";
+      final specialCharacters = "!@#\$%^&*()-_+=<>?";
+      final numbers = "0123456789";
+
+      final allCharacters =
+          capitalLetters + smallLetters + specialCharacters + numbers;
+
+      String password = '';
+      for (int i = 0; i < 10; i++) {
+       password += allCharacters[random.nextInt(allCharacters.length)];
+      }
+      return password;
+    }
 
     showDialog(
       context: context,
@@ -92,8 +110,6 @@ Widget build(BuildContext context) {
           },
           child: ListTile(
             title: Text(item.title),
-            subtitle: Text(item.username),
-            // Add more details or customize the appearance as needed
           ),
         );
       },
@@ -116,5 +132,4 @@ class PasswordItem {
   String notes;
 
   PasswordItem({required this.title, required this.username, required this.password, required this.website, required this.notes});
-}
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+//import 'package:loginuicolors/password_details.dart';
 import 'login.dart';
 import 'register.dart';
 import 'homepage.dart';
@@ -11,6 +12,7 @@ void main() {
       'register': (context) => MyRegister(),
       'login': (context) => MyLogin(),
       'home': (context) => MyHomePage(),
+
     },
   ));
 }

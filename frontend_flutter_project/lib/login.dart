@@ -23,7 +23,7 @@ class _MyLoginState extends State<MyLogin> {
               padding: EdgeInsets.only(left: 35, top: 130),
               child: Text(
                 'Welcome\nBack',
-                style: TextStyle(color: Colors.black, fontSize: 33),
+                style: TextStyle(color: Colors.white, fontSize: 33),
               ),
             ),
             SingleChildScrollView(
@@ -63,6 +63,16 @@ class _MyLoginState extends State<MyLogin> {
                                   borderRadius: BorderRadius.circular(10),
                                 )),
                           ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          ElevatedButton.icon(
+                            onPressed: () {
+                            },
+                            icon: Icon(Icons.login),
+                            label: Text('Login Using Google'),
+                          ),
+
                           SizedBox(
                             height: 40,
                           ),
