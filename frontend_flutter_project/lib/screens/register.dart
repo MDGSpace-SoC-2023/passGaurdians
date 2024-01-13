@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:loginuicolors/auth_api.dart';
-import 'package:loginuicolors/encryption.dart';
+import 'package:loginuicolors/api_connection/auth_api.dart';
+import 'package:loginuicolors/encryption/encryption.dart';
 //import 'package:loginuicolors/login.dart';
 
 class MyRegister extends StatefulWidget {

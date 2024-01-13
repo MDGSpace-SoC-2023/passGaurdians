@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'auth_api.dart';
-import 'encryption.dart';
+import '../api_connection/auth_api.dart';
+import '../encryption/encryption.dart';
 class MyLogin extends StatefulWidget {
   const MyLogin({Key? key}) : super(key: key);
 
