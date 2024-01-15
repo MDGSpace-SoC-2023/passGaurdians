@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../api_connection/auth_api.dart';
 import '../encryption/encryption.dart';
+
 class MyLogin extends StatefulWidget {
   const MyLogin({Key? key}) : super(key: key);
 
@@ -83,12 +84,15 @@ class _MyLoginState extends State<MyLogin> {
                                       /*final encryptedpass =
                                           EncryptDecrypt.encryptAES(
                                               passwordController.text).base64;*/
-                                      if (await userlogin(emailController.text,
-                                        //encryptedpass
-                                        passwordController.text)){
-                                        Navigator.pushNamed(context, 'home');
-                                      }
-                                },
+                                      var token = await userlogin(
+                                          emailController.text,
+                                          //encryptedpass
+                                          passwordController.text);
+                                      print("login done");
+                                      print(token);
+                                      Navigator.pushNamed(context, 'home',
+                                          arguments: token);
+                                    },
                                     icon: Icon(
                                       Icons.arrow_forward,
                                     )),
@@ -102,7 +106,8 @@ class _MyLoginState extends State<MyLogin> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               TextButton(
-                                onPressed: () { Navigator.pushNamed(context, 'register');
+                                onPressed: () {
+                                  Navigator.pushNamed(context, 'register');
                                 },
                                 child: Text(
                                   'Sign Up',

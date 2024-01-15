@@ -11,16 +11,21 @@ class MyHomePage extends StatefulWidget {
 class _MyHomeState extends State<MyHomePage> {
   List<PasswordItem> passwordList = [];
   bool isloading = true;
-  
+
   @override
   void initState() {
     super.initState();
     print("inside initstate");
-    fetchdata();
+    Future.delayed(Duration.zero, () {
+      print("getting token");
+      final token = ModalRoute.of(context)?.settings.arguments as dynamic;
+      print(token);
+      fetchdata(token);
+    });
   }
 
-  void fetchdata() async {
-    List data = await ListPasswords();
+  void fetchdata(dynamic token) async {
+    List data = await ListPasswords(token);
     data.forEach(
       (pass) {
         PasswordItem p = PasswordItem(
@@ -111,6 +116,7 @@ class _MyHomeState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final token = ModalRoute.of(context)?.settings.arguments as String;
     return Scaffold(
       appBar: AppBar(
         title: Text('Password App'),

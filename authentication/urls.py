@@ -1,5 +1,5 @@
 from django.urls import path,include
-from .views import get_csrf_token, NewLoginView,NewRegisterView,MyProtectedView
+from .views import get_csrf_token, NewLoginView,NewRegisterView
 from dj_rest_auth.views import LoginView,LogoutView, UserDetailsView
 from dj_rest_auth.registration.views import RegisterView
 

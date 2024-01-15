@@ -12,6 +12,10 @@ class ListCreateView(generics.ListCreateAPIView):
     queryset=PasswordStorage.objects.all()
     permission_classes=[IsAuthenticated]
 
+    def dispatch(self, request, *args, **kwargs):
+        print(request.headers)
+        return super().dispatch(request, *args, **kwargs)
+    
     def get_queryset(self):
         return PasswordStorage.objects.filter(user=self.request.user)
     
@@ -26,14 +30,14 @@ class UpdateView(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         return PasswordStorage.objects.filter(user=self.request.user)
 
-    def get_object(self,request,*args,**kwargs):
-        pk=self.kwargs.get('pk')
-        obj=PasswordStorage.objects.get(pk=pk)
+    # def get_object(self,request,*args,**kwargs):
+    #     pk=self.kwargs.get('pk')
+    #     obj=PasswordStorage.objects.get(pk=pk)
         return obj
 
-def get_csrf_token(request):
-    csrf_token = get_token(request)
-    response = JsonResponse({'csrf_token': csrf_token})
-    response['X-CSRFToken'] = csrf_token  # Set the CSRF token in the response header
-    return response
+# def get_csrf_token(request):
+#     csrf_token = get_token(request)
+#     response = JsonResponse({'csrf_token': csrf_token})
+#     response['X-CSRFToken'] = csrf_token  # Set the CSRF token in the response header
+#     return response
 
