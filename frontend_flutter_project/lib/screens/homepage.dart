@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loginuicolors/screens/password_details.dart';
 import 'package:loginuicolors/api_connection/passwordStorage_api.dart';
+import 'dart:math';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -51,6 +52,24 @@ class _MyHomeState extends State<MyHomePage> {
     TextEditingController passwordController = TextEditingController();
     TextEditingController websiteController = TextEditingController();
     TextEditingController notesController = TextEditingController();
+
+    //ignore: unused_element
+    String generateRandomPassword() {
+      final random = Random();
+      final capitalLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      final smallLetters = "abcdefghijklmnopqrstuvwxyz";
+      final specialCharacters = "!@#\$%^&*()-_+=<>?";
+      final numbers = "0123456789";
+
+      final allCharacters =
+          capitalLetters + smallLetters + specialCharacters + numbers;
+
+      String password = '';
+      for (int i = 0; i < 10; i++) {
+       password += allCharacters[random.nextInt(allCharacters.length)];
+      }
+      return password;
+    }
 
     showDialog(
       context: context,
