@@ -26,7 +26,7 @@ import 'package:loginuicolors/api_connection/auth_api.dart';
 // }
 
 Future Create(String title, String username, dynamic password, String website,
-    String details) async {
+    String details, String token) async {
   var uriListCreate =
       Uri.parse("http://127.0.0.1:8000/passwordStorageApp/passwordStorage/");
   String csrfToken = await getCsrfToken();
@@ -41,6 +41,7 @@ Future Create(String title, String username, dynamic password, String website,
       headers: {
         "Referer": "http://127.0.0.1:8000",
         "X-CSRFToken": csrfToken,
+        'Authorization': 'Token $token',
         'Content-Type': 'application/json'
       });
 
@@ -103,7 +104,7 @@ Future ListPasswords(String token) async {
   String csrfToken = await getCsrfToken();
   print(token);
   var headers = {
-    'Authorization': 'Bearer $token',
+    'Authorization': 'Token $token',
     'X-CSRFToken': csrfToken,
   };
   var response = await http.get(uri, headers: headers);

@@ -2,6 +2,7 @@ from .serializers import PasswordStorageSerializer
 from .models import PasswordStorage
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication,BaseAuthentication,SessionAuthentication,BasicAuthentication
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
 # Create your views here.
@@ -10,6 +11,7 @@ from django.middleware.csrf import get_token
 class ListCreateView(generics.ListCreateAPIView):
     serializer_class=PasswordStorageSerializer
     queryset=PasswordStorage.objects.all()
+    authentication_classes=[TokenAuthentication]
     permission_classes=[IsAuthenticated]
 
     def dispatch(self, request, *args, **kwargs):
@@ -25,6 +27,7 @@ class ListCreateView(generics.ListCreateAPIView):
 class UpdateView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class=PasswordStorageSerializer
     queryset=PasswordStorage.objects.all()
+    authentication_classes=[TokenAuthentication]
     permission_classes=[IsAuthenticated]
     
     def get_queryset(self):
@@ -33,7 +36,7 @@ class UpdateView(generics.RetrieveUpdateDestroyAPIView):
     # def get_object(self,request,*args,**kwargs):
     #     pk=self.kwargs.get('pk')
     #     obj=PasswordStorage.objects.get(pk=pk)
-        return obj
+        #return obj
 
 # def get_csrf_token(request):
 #     csrf_token = get_token(request)

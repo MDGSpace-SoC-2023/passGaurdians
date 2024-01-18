@@ -31,20 +31,7 @@ Future userlogin(String email, dynamic password) async {
 
   print(res.body);
   print(res.statusCode);
-  if ((res.statusCode == 200) ||
-      (res.statusCode == 201) ||
-      (res.statusCode == 202) ||
-      (res.statusCode == 203) ||
-      (res.statusCode == 204)) {
-    var data = json.decode(res.body);
-    var authToken = data['key'];
-    print("got token in userlogin");
-    print(authToken);
-    print("Login Successful");
-    return authToken;
-  } else {
-    print("Some Error Occured. Login is denied");
-  }
+  return res;
 }
 
 Future userregister(String email, dynamic password) async {
@@ -53,7 +40,7 @@ Future userregister(String email, dynamic password) async {
   print(csrfToken);
   print(email);
   print(password);
-  var res = await http.post(uriRegister,
+  http.Response res = await http.post(uriRegister,
       body: jsonEncode({
         'email': email,
         'password1': password,

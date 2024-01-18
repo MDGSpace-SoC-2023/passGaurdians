@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../api_connection/auth_api.dart';
 import '../encryption/encryption.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class MyLogin extends StatefulWidget {
   const MyLogin({Key? key}) : super(key: key);
@@ -68,12 +70,10 @@ class _MyLoginState extends State<MyLogin> {
                             height: 30,
                           ),
                           ElevatedButton.icon(
-                            onPressed: () {
-                            },
+                            onPressed: () {},
                             icon: Icon(Icons.login),
                             label: Text('Login Using Google'),
                           ),
-
                           SizedBox(
                             height: 40,
                           ),
@@ -94,14 +94,27 @@ class _MyLoginState extends State<MyLogin> {
                                       /*final encryptedpass =
                                           EncryptDecrypt.encryptAES(
                                               passwordController.text).base64;*/
-                                      var token = await userlogin(
+                                      http.Response res = await userlogin(
                                           emailController.text,
                                           //encryptedpass
                                           passwordController.text);
-                                      print("login done");
-                                      print(token);
-                                      Navigator.pushNamed(context, 'home',
-                                          arguments: token);
+                                      if ((res.statusCode == 200) ||
+                                          (res.statusCode == 201) ||
+                                          (res.statusCode == 202) ||
+                                          (res.statusCode == 203) ||
+                                          (res.statusCode == 204)) {
+                                        var data = json.decode(res.body);
+                                        var token = data['key'];
+                                        print("got token in userlogin");
+                                        print("Login Successful");
+                                        print("login done");
+                                        print(token);
+                                        Navigator.pushNamed(context, 'home',
+                                            arguments: token);
+                                      } else {
+                                        print(
+                                            "Some Error Occured. Login is denied");
+                                      }
                                     },
                                     icon: Icon(
                                       Icons.arrow_forward,

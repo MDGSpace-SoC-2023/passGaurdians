@@ -12,7 +12,7 @@ class PasswordStorageSerializer(serializers.ModelSerializer):
     user=UserSerializer(read_only=True)
     class Meta:
         model=PasswordStorage
-        fields=['title','username','password','website','details']
+        fields=['title','username','password','website','details','user']
 
     """title=serializers.CharField(max_length=100,required=True,)
     username=serializers.CharField(max_length=100,required=False)

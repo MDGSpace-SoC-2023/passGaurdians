@@ -52,7 +52,7 @@ class _MyHomeState extends State<MyHomePage> {
     TextEditingController passwordController = TextEditingController();
     TextEditingController websiteController = TextEditingController();
     TextEditingController notesController = TextEditingController();
-
+    final token = ModalRoute.of(context)?.settings.arguments as dynamic;
     //ignore: unused_element
     String generateRandomPassword() {
       final random = Random();
@@ -66,7 +66,7 @@ class _MyHomeState extends State<MyHomePage> {
 
       String password = '';
       for (int i = 0; i < 10; i++) {
-       password += allCharacters[random.nextInt(allCharacters.length)];
+        password += allCharacters[random.nextInt(allCharacters.length)];
       }
       return password;
     }
@@ -108,7 +108,8 @@ class _MyHomeState extends State<MyHomePage> {
                     usernameController.text,
                     passwordController.text,
                     websiteController.text,
-                    notesController.text)) {
+                    notesController.text,
+                    token)) {
                   setState(
                     () {
                       passwordList.add(
@@ -135,7 +136,6 @@ class _MyHomeState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final token = ModalRoute.of(context)?.settings.arguments as String;
     return Scaffold(
       appBar: AppBar(
         title: Text('Password App'),
