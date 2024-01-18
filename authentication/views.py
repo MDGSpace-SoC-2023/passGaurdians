@@ -13,7 +13,7 @@ from rest_framework.permissions import IsAuthenticated
 
 class NewLoginView(LoginView):
     serializer_class=NewLoginSerializer
-    pagination_class=[IsAuthenticated]
+    #pagination_class=[IsAuthenticated]
 
 class NewRegisterView(RegisterView):
     serializer_class=NewRegisterSerializer
