@@ -31,10 +31,32 @@ Future userlogin(String email, dynamic password) async {
 
   print(res.body);
   print(res.statusCode);
-  return res;
+  if ((res.statusCode == 200) ||
+      (res.statusCode == 201) ||
+      (res.statusCode == 202) ||
+      (res.statusCode == 203) ||
+      (res.statusCode == 204)) {
+    var data = json.decode(res.body);
+    var token = data['key'];
+    print("got token in userlogin");
+    print("Login Successful");
+    print("login done");
+    print(token);
+    return LoginResponse(token, true);
+  } else {
+    print("Some Error Occured. Login is denied");
+    return LoginResponse("", false);
+  }
 }
 
-Future userregister(String email, dynamic password) async {
+class LoginResponse {
+  final String token;
+  final bool auth;
+
+  LoginResponse(this.token, this.auth);
+}
+
+Future userregister(String email, dynamic password, dynamic salt) async {
   var uriRegister = Uri.parse("http://127.0.0.1:8000/user/register/");
   String csrfToken = await getCsrfToken();
   print(csrfToken);
@@ -45,6 +67,7 @@ Future userregister(String email, dynamic password) async {
         'email': email,
         'password1': password,
         'password2': password,
+        'salt':salt,
       }),
       headers: {
         //"Referer": "http://127.0.0.1:8000",

@@ -1,4 +1,5 @@
 import 'package:encrypt/encrypt.dart';
+import 'package:bcrypt/bcrypt.dart';
 
 class EncryptDecrypt {
   static final key = Key.fromSecureRandom(32);
@@ -21,3 +22,21 @@ class EncryptDecrypt {
   final decryptedText = EncryptDecrypt.decryptAES("CJ/pKZMbOLdk01nlMBvlHQ==");
   print(decryptedText);
 }*/
+
+class HashPassword {
+  HashedResult hash(String text) {
+    final String salt = BCrypt.gensalt();
+    final String hashed = BCrypt.hashpw(text, salt);
+    print(text);
+    print(salt);
+    print(hashed);
+    return HashedResult(hashed, salt);
+  }
+}
+
+class HashedResult {
+  final String hashed;
+  final String salt;
+
+  HashedResult(this.hashed, this.salt);
+}

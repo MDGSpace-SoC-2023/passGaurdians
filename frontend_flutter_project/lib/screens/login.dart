@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../api_connection/auth_api.dart';
-import '../encryption/encryption.dart';
+import 'package:loginuicolors/security/HashEncrypt.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -89,36 +89,26 @@ class _MyLoginState extends State<MyLogin> {
                                 radius: 30,
                                 backgroundColor: Color(0xff4c505b),
                                 child: IconButton(
-                                    color: Colors.white,
-                                    onPressed: () async {
-                                      /*final encryptedpass =
+                                  color: Colors.white,
+                                  onPressed: () async {
+                                    /*final encryptedpass =
                                           EncryptDecrypt.encryptAES(
                                               passwordController.text).base64;*/
-                                      http.Response res = await userlogin(
-                                          emailController.text,
-                                          //encryptedpass
-                                          passwordController.text);
-                                      if ((res.statusCode == 200) ||
-                                          (res.statusCode == 201) ||
-                                          (res.statusCode == 202) ||
-                                          (res.statusCode == 203) ||
-                                          (res.statusCode == 204)) {
-                                        var data = json.decode(res.body);
-                                        var token = data['key'];
-                                        print("got token in userlogin");
-                                        print("Login Successful");
-                                        print("login done");
-                                        print(token);
-                                        Navigator.pushNamed(context, 'home',
-                                            arguments: token);
-                                      } else {
-                                        print(
-                                            "Some Error Occured. Login is denied");
-                                      }
-                                    },
-                                    icon: Icon(
-                                      Icons.arrow_forward,
-                                    )),
+                                    LoginResponse response = await userlogin(
+                                        emailController.text,
+                                        //encryptedpass
+                                        passwordController.text);
+                                    if (response.auth) {
+                                      Navigator.pushNamed(context, 'home',
+                                          arguments: response.token);
+                                    } else {
+                                      print("Login Api unsuccessful");
+                                    }
+                                  },
+                                  icon: Icon(
+                                    Icons.arrow_forward,
+                                  ),
+                                ),
                               )
                             ],
                           ),
