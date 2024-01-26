@@ -25,24 +25,12 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.email
-    
-    def set_password(self, raw_password):
-        hashed_password = bcrypt.hashpw(raw_password.encode('utf-8'), bcrypt.gensalt())
-        self.password = hashed_password.decode('utf-8')
-    
-    def check_password(self, raw_password):
-        return bcrypt.checkpw(raw_password.encode('utf-8'), self.password.encode('utf-8'))
-
-    def generate_salt(self):
-        self.salt = secrets.token_hex(16)
-
-    def hash_password(self, password):
-        if not self.salt:
-            self.generate_salt()
-
-        hashed_password = bcrypt.hashpw(password.encode('utf-8'), self.salt.encode('utf-8'))
-        return hashed_password.decode('utf-8')
 
     def verify_password(self, entered_password):
-        hashed_password = self.hash_password(entered_password)
-        return bcrypt.checkpw(entered_password.encode('utf-8'), hashed_password.encode('utf-8'))
+        if not self.salt:
+            return False 
+        hashed_password=bcrypt.hashpw(entered_password.encode('utf-8'), self.salt.encode('utf-8')).decode('utf-8')
+        return self.check_password(hashed_password)
+ 
+    def set_salt(self, salt):
+        self.salt = salt

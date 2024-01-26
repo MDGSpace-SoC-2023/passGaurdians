@@ -30,6 +30,7 @@ class HashPassword {
     print(text);
     print(salt);
     print(hashed);
+    print("hashing done");
     return HashedResult(hashed, salt);
   }
 }

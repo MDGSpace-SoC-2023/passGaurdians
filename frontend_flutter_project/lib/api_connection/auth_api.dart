@@ -37,7 +37,7 @@ Future userlogin(String email, dynamic password) async {
       (res.statusCode == 203) ||
       (res.statusCode == 204)) {
     var data = json.decode(res.body);
-    var token = data['key'];
+    var token = data['token'];
     print("got token in userlogin");
     print("Login Successful");
     print("login done");
