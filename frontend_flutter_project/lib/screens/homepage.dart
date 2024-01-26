@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:loginuicolors/screens/password_details.dart';
-import 'package:loginuicolors/api_connection/passwordStorage_api.dart';
+import 'package:passGuard/screens/password_details.dart';
+import 'package:passGuard/api_connection/passwordStorage_api.dart';
 import 'dart:math';
+import 'package:passGuard/security/auto_lock.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -136,39 +137,41 @@ class _MyHomeState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Password App'),
-      ),
-      body: isloading
-          ? CircularProgressIndicator()
-          : ListView.builder(
-              itemCount: passwordList.length,
-              itemBuilder: (context, index) {
-                PasswordItem item = passwordList[index];
-                return ListTile(
-                  leading: CircleAvatar(
-                    child: Text(passwordList[index].title[0]),
-                  ),
-                  title: Text(
-                    passwordList[index].title,
-                  ),
-                  subtitle: Text(passwordList[index].username),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            PasswordDetailsPage(passwordItem: item),
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _showAddPasswordDialog,
-        child: Icon(Icons.add),
+    return AutoLock(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Password App'),
+        ),
+        body: isloading
+            ? CircularProgressIndicator()
+            : ListView.builder(
+                itemCount: passwordList.length,
+                itemBuilder: (context, index) {
+                  PasswordItem item = passwordList[index];
+                  return ListTile(
+                    leading: CircleAvatar(
+                      child: Text(passwordList[index].title[0]),
+                    ),
+                    title: Text(
+                      passwordList[index].title,
+                    ),
+                    subtitle: Text(passwordList[index].username),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              PasswordDetailsPage(passwordItem: item),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _showAddPasswordDialog,
+          child: Icon(Icons.add),
+        ),
       ),
     );
   }

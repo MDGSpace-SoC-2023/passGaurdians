@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:loginuicolors/api_connection/auth_api.dart';
-import 'package:loginuicolors/security/HashEncrypt.dart';
-//import 'package:loginuicolors/login.dart';
+import 'package:passGuard/api_connection/auth_api.dart';
+import 'package:passGuard/security/HashEncrypt.dart';
 
 class MyRegister extends StatefulWidget {
   const MyRegister({Key? key}) : super(key: key);

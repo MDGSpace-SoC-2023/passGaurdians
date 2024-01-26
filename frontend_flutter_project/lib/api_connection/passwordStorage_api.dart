@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:loginuicolors/api_connection/auth_api.dart';
+import 'package:passGuard/api_connection/auth_api.dart';
 
 // Future getCsrfTokenPasswordStorage() async {
 //   var uri = Uri.parse("http://127.0.0.1:8000/passwordStorageApp/csrf_token/");

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import '../api_connection/auth_api.dart';
-import 'package:loginuicolors/security/HashEncrypt.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:passGuard/api_connection/auth_api.dart';
 
 class MyLogin extends StatefulWidget {
   const MyLogin({Key? key}) : super(key: key);
