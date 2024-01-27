@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 Future getCsrfToken() async {
@@ -67,7 +67,7 @@ Future userregister(String email, dynamic password, dynamic salt) async {
         'email': email,
         'password1': password,
         'password2': password,
-        'salt':salt,
+        'salt': salt,
       }),
       headers: {
         //"Referer": "http://127.0.0.1:8000",
@@ -88,4 +88,40 @@ Future userregister(String email, dynamic password, dynamic salt) async {
     print("Some Error Occured. Registration is denied");
     return false;
   }
+}
+
+Future<UserResponse> UserInfo(String token) async {
+  var uri = Uri.parse("http://127.0.0.1:8000/user/userInfo/");
+
+  String csrfToken = await getCsrfToken();
+  print(token);
+  var headers = {
+    'Authorization': 'Token $token',
+    'X-CSRFToken': csrfToken,
+  };
+  var response = await http.get(uri, headers: headers);
+  print(response.body);
+  var data = json.decode(response.body);
+  print(data);
+  String password = data[0]['password'].toString();
+  print(password);
+  String salt = data[0]['salt'].toString();
+  print(salt);
+  String email = data[0]['email'];
+  print(email);
+
+  if (response.statusCode == 200) {
+    print("Successful");
+    return UserResponse(password, salt, email);
+  } else {
+    print("Some error occured. Access is denied.");
+    return UserResponse("", "", "");
+  }
+}
+
+class UserResponse {
+  final String password;
+  final String salt;
+  final String email;
+  UserResponse(this.password, this.salt, this.email);
 }

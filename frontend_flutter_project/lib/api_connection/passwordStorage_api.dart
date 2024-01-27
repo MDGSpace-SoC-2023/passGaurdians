@@ -1,34 +1,13 @@
 import 'dart:convert';
 
+import 'package:encrypt/encrypt.dart';
 import 'package:http/http.dart' as http;
 import 'package:passGuard/api_connection/auth_api.dart';
 
-// Future getCsrfTokenPasswordStorage() async {
-//   var uri = Uri.parse("http://127.0.0.1:8000/passwordStorageApp/csrf_token/");
-//   var response = await http.get(uri);
-
-//   if (response.statusCode == 200) {
-//     return response.headers['x-csrftoken'] ?? "";
-//   } else {
-//     throw Exception('Failed to get CSRF token');
-//   }
-// }
-
-// Future getToken() async {
-//   var uri = Uri.parse("http://127.0.0.1:8000/user/token/");
-//   var response = await http.get(uri);
-
-//   if (response.statusCode == 200) {
-//     return response.headers['Token'] ?? "";
-//   } else {
-//     throw Exception('Failed to get Token');
-//   }
-// }
-
-Future Create(String title, String username, dynamic password, String website,
+Future Create(String title, String username, String password, String website,
     String details, String token) async {
   var uriListCreate =
-      Uri.parse("http://127.0.0.1:8000/passwordStorageApp/passwordStorage/");
+      Uri.parse("http://127.0.0.1:8000/passwordStorageApp/create/");
   String csrfToken = await getCsrfToken();
   var res = await http.post(uriListCreate,
       body: jsonEncode({
@@ -60,12 +39,12 @@ Future Create(String title, String username, dynamic password, String website,
   }
 }
 
-Future Update(int pk, String title, String username, dynamic password,
-    String website, String details) async {
-  var uriUpdate =
-      Uri.parse("http://127.0.0.1:8000/passwordStorageApp/$pk/update");
+Future Update(String title, String username, dynamic password, String website,
+    String details, String token) async {
+  var pk = getpk();
+  var uriUpdate = Uri.parse("http://127.0.0.1:8000/update/$pk");
   String csrfToken = await getCsrfToken();
-  print(csrfToken);
+  print(token);
   var res = await http.post(uriUpdate,
       body: jsonEncode(
         {
@@ -77,7 +56,7 @@ Future Update(int pk, String title, String username, dynamic password,
         },
       ),
       headers: {
-        //"Referer": "http://127.0.0.1:8000",
+        'Authorization': 'Token $token',
         "X-CSRFToken": csrfToken,
         'Content-Type': 'application/json'
       });
@@ -99,7 +78,7 @@ Future Update(int pk, String title, String username, dynamic password,
 
 Future ListPasswords(String token) async {
   var uri =
-      Uri.parse("http://127.0.0.1:8000/passwordStorageApp/passwordStorage/");
+      Uri.parse("http://127.0.0.1:8000/passwordStorageApp/create/");
 
   String csrfToken = await getCsrfToken();
   print(token);
@@ -117,5 +96,18 @@ Future ListPasswords(String token) async {
     return data;
   } else {
     print("Some error occured. Access is denied.");
+  }
+}
+
+Future getpk() async {
+  var uri = Uri.parse("http://127.0.0.1:8000/passwordStorageApp/pk/");
+  var response = await http.get(uri);
+
+  if (response.statusCode == 200) {
+    var data = json.decode(response.body);
+    return data;
+  } else {
+    print("Some error occured");
+    return;
   }
 }

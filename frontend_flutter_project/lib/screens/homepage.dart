@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:passGuard/screens/password_details.dart';
 import 'package:passGuard/api_connection/passwordStorage_api.dart';
+import 'package:passGuard/security/HashEncrypt.dart';
 import 'dart:math';
 import 'package:passGuard/security/auto_lock.dart';
 
@@ -28,14 +29,29 @@ class _MyHomeState extends State<MyHomePage> {
 
   void fetchdata(dynamic token) async {
     List data = await ListPasswords(token);
-    data.forEach(
-      (pass) {
+    data.forEach (
+      (pass) async {
         PasswordItem p = PasswordItem(
-          title: pass['title'],
-          username: pass['username'],
-          password: pass['password'],
-          website: pass['website'],
-          notes: pass['details'],
+          title: await EncryptDecrypt().decryptAES(
+            pass['title'],
+            token,
+          ),
+          username:await EncryptDecrypt().decryptAES(
+            pass['username'],
+            token,
+          ),
+          password: await EncryptDecrypt().decryptAES(
+            pass['password'],
+            token,
+          ),
+          website: await EncryptDecrypt().decryptAES(
+            pass['website'],
+            token,
+          ),
+          notes: await EncryptDecrypt().decryptAES(
+            pass['details'],
+            token,
+          ),
         );
         passwordList.add(p);
       },
@@ -105,23 +121,30 @@ class _MyHomeState extends State<MyHomePage> {
             ElevatedButton(
               onPressed: () async {
                 if (await Create(
-                    titleController.text,
-                    usernameController.text,
-                    passwordController.text,
-                    websiteController.text,
-                    notesController.text,
+                    await EncryptDecrypt().encryptAES(
+                      titleController.text,
+                      token,
+                    ),
+                    await EncryptDecrypt().encryptAES(
+                      usernameController.text,
+                      token,
+                    ),
+                    await EncryptDecrypt().encryptAES(
+                      passwordController.text,
+                      token,
+                    ),
+                    await EncryptDecrypt().encryptAES(
+                      websiteController.text,
+                      token,
+                    ),
+                    await EncryptDecrypt().encryptAES(
+                      notesController.text,
+                      token,
+                    ),
                     token)) {
                   setState(
                     () {
-                      passwordList.add(
-                        PasswordItem(
-                          title: titleController.text,
-                          username: usernameController.text,
-                          password: passwordController.text,
-                          website: websiteController.text,
-                          notes: notesController.text,
-                        ),
-                      );
+                      fetchdata(token);
                     },
                   );
                   Navigator.of(context).pop();
@@ -191,3 +214,4 @@ class PasswordItem {
       required this.website,
       required this.notes});
 }
+

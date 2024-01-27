@@ -6,7 +6,6 @@ from allauth.account.adapter import get_adapter
 from django.core.exceptions import ValidationError as DjangoValidationError
 from allauth.account.utils import setup_user_email
 from allauth.utils import get_username_max_length
-import secrets
 from .models import User
 
 class NewLoginSerializer(LoginSerializer):
@@ -50,6 +49,16 @@ class NewRegisterSerializer(RegisterSerializer):
         user.set_password(password)
         user.save()
         return user
+    
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model =User
+        fields='__all__'
+     
+
+
+
+    
 
         
         

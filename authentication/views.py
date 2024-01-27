@@ -1,14 +1,16 @@
 from dj_rest_auth.views import LoginView
 from dj_rest_auth.registration.views import RegisterView
-from .serializers import NewLoginSerializer,NewRegisterSerializer
+from .serializers import NewLoginSerializer,NewRegisterSerializer,UserSerializer
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from dj_rest_auth.registration.views import SocialLoginView
-import secrets
-from rest_framework import response, status
+from rest_framework import response, status,generics
 from rest_framework.authtoken.models import Token
+from .models import User
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 
 class NewLoginView(LoginView):
@@ -51,7 +53,12 @@ def get_csrf_token(request):
     response['X-CSRFToken'] = csrf_token 
     return response
 
-
+class getUserInfo(generics.ListAPIView):
+    serializer_class=UserSerializer
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[IsAuthenticated]
+    def get_queryset(self):
+        return User.objects.filter(pk=self.request.user.pk)
 
 class GoogleLogin(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
