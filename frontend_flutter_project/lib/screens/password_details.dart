@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:passGuard/screens/homepage.dart';
 import 'package:passGuard/security/auto_lock.dart';
 
-class PasswordDetailsPage extends StatelessWidget {
-  final PasswordItem passwordItem;
+class PasswordDetailsPage extends StatefulWidget {
+  const PasswordDetailsPage({Key? key, required this.passwordItem}) : super(key: key);
+  final PasswordItem passwordItem;  
+  @override
+  PasswordDetailsPageState createState() => PasswordDetailsPageState();
+}
 
-  PasswordDetailsPage({required this.passwordItem});
-
+class PasswordDetailsPageState extends State<PasswordDetailsPage> {
+  bool showPassword = false;
   @override
   Widget build(BuildContext context) {
     return AutoLock(
@@ -16,14 +20,34 @@ class PasswordDetailsPage extends StatelessWidget {
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: ListView(
             children: [
-              Text('Title: ${passwordItem.title}'),
-              Text('Username: ${passwordItem.username}'),
-              Text('Password: ${passwordItem.password}'),
-              Text('Website: ${passwordItem.website}'),
-              Text('Notes: ${passwordItem.notes}'),
+              Text('Title: ${widget.passwordItem.title}'),
+              Text('Username: ${widget.passwordItem.username}'),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      showPassword
+                          ? widget.passwordItem.password
+                          : '*' * widget.passwordItem.password.length,
+                      // You can customize the styling here as needed
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      showPassword ? Icons.visibility : Icons.visibility_off,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        showPassword = !showPassword;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              Text('Website: ${widget.passwordItem.website}'),
+              Text('Notes: ${widget.passwordItem.notes}'),
             ],
           ),
         ),

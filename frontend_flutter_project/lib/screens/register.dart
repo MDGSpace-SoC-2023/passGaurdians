@@ -12,6 +12,7 @@ class MyRegister extends StatefulWidget {
 class _MyRegisterState extends State<MyRegister> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  bool showPassword = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -91,28 +92,43 @@ class _MyRegisterState extends State<MyRegister> {
                           SizedBox(
                             height: 30,
                           ),
-                          TextField(
-                            controller: passwordController,
-                            style: TextStyle(color: Colors.black),
-                            obscureText: true,
-                            decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(
-                                    color: Colors.black,
+                          Container(
+                            height: 55,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                color: Colors.black,
+                              ),
+                            ),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: TextField(
+                                    controller: passwordController,
+                                    style: TextStyle(color: Colors.black),
+                                    obscureText: !showPassword,
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.all(10),
+                                      hintText: "Password",
+                                      hintStyle: TextStyle(color: Colors.black),
+                                      border: InputBorder.none,
+                                    ),
                                   ),
                                 ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(
-                                    color: Colors.black,
+                                IconButton(
+                                  icon: Icon(
+                                    showPassword
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
                                   ),
+                                  onPressed: () {
+                                    setState(() {
+                                      showPassword = !showPassword;
+                                    });
+                                  },
                                 ),
-                                hintText: "Password",
-                                hintStyle: TextStyle(color: Colors.black),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                )),
+                              ],
+                            ),
                           ),
                           SizedBox(
                             height: 40,
@@ -137,7 +153,8 @@ class _MyRegisterState extends State<MyRegister> {
                                           .hash(passwordController.text);
                                       if (await userregister(
                                           emailController.text,
-                                          HashedPass.hashed,HashedPass.salt)) {
+                                          HashedPass.hashed,
+                                          HashedPass.salt)) {
                                         Navigator.pushNamed(context, 'login');
                                       }
                                     },

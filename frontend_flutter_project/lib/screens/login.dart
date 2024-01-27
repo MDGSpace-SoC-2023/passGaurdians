@@ -11,6 +11,7 @@ class MyLogin extends StatefulWidget {
 class _MyLoginState extends State<MyLogin> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  bool showPassword = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -51,26 +52,55 @@ class _MyLoginState extends State<MyLogin> {
                           SizedBox(
                             height: 30,
                           ),
-                          TextField(
-                            controller: passwordController,
-                            style: TextStyle(),
-                            obscureText: true,
-                            decoration: InputDecoration(
-                                fillColor: Colors.grey.shade100,
-                                filled: true,
-                                hintText: "Password",
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                )),
+                          Container(
+                            height: 55,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                color: Colors.black,
+                              ),
+                              color: Colors.grey.shade100,
+                            ),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: TextField(
+                                    controller: passwordController,
+                                    style: TextStyle(),
+                                    obscureText: !showPassword,
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.all(10),
+                                      hintText: "Password",
+                                      hintStyle: TextStyle(),
+                                      border: InputBorder.none,
+                                    ),
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: Icon(
+                                    showPassword
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      showPassword = !showPassword;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
                           SizedBox(
                             height: 30,
                           ),
-                          ElevatedButton.icon(
+                          Container(
+                            alignment: Alignment.bottomLeft,
+                            child:ElevatedButton.icon(
                             onPressed: () {},
                             icon: Icon(Icons.login),
                             label: Text('Login Using Google'),
-                          ),
+                          )),
                           SizedBox(
                             height: 40,
                           ),

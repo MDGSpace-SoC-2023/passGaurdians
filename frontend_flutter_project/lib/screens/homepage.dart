@@ -14,7 +14,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomeState extends State<MyHomePage> {
   List<PasswordItem> passwordList = [];
   bool isloading = true;
-
+  bool showPassword = false;
   @override
   void initState() {
     super.initState();
@@ -103,11 +103,25 @@ class _MyHomeState extends State<MyHomePage> {
               Row(
                 children: [
                   Expanded(
-                    child: TextField(
-                      controller: passwordController,
-                      decoration: InputDecoration(labelText: 'Password'),
-                    ),
-                  ),
+                      child: Row(
+                    children: [
+                      TextField(
+                        controller: passwordController,
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                        ),
+                        obscureText: !showPassword,
+                      ),
+                      Checkbox(
+                        value: showPassword,
+                        onChanged: (value) {
+                          setState(() {
+                            showPassword = value!;
+                          });
+                        },
+                      ),
+                    ],
+                  )),
                   ElevatedButton(
                     onPressed: () {
                       String generatedPassword = generateRandomPassword();
