@@ -19,7 +19,11 @@ class _MyHomeState extends State<MyHomePage> {
   void initState() {
     super.initState();
     print("inside initstate");
-    Future.delayed(Duration.zero, () {
+    _initializeData();
+  }
+
+  Future<void> _initializeData() async {
+    await Future.delayed(Duration.zero, () {
       print("getting token");
       final token = ModalRoute.of(context)?.settings.arguments as dynamic;
       print(token);
@@ -27,40 +31,33 @@ class _MyHomeState extends State<MyHomePage> {
     });
   }
 
-  void fetchdata(dynamic token) async {
+  Future<void> fetchdata(dynamic token) async {
     List data = await ListPasswords(token);
-    data.forEach (
-      (pass) async {
-        PasswordItem p = PasswordItem(
-          title: await EncryptDecrypt().decryptAES(
-            pass['title'],
-            token,
-          ),
-          username:await EncryptDecrypt().decryptAES(
-            pass['username'],
-            token,
-          ),
-          password: await EncryptDecrypt().decryptAES(
-            pass['password'],
-            token,
-          ),
-          website: await EncryptDecrypt().decryptAES(
-            pass['website'],
-            token,
-          ),
-          notes: await EncryptDecrypt().decryptAES(
-            pass['details'],
-            token,
-          ),
-        );
-        passwordList.add(p);
-      },
-    );
-    setState(
-      () {
-        isloading = false;
-      },
-    );
+    List<PasswordItem> decryptedPasswords = [];
+
+    for (var pass in data) {
+      PasswordItem p = await EncryptDecrypt().decryptAES(
+          pass['title'],
+          pass['username'],
+          pass['password'],
+          pass['website'],
+          pass['details'],
+          token);
+      decryptedPasswords.add(p);
+    }
+
+    setState(() {
+      passwordList = decryptedPasswords;
+      isloading = false;
+    });
+  }
+
+  Future<void> _addPasswordItem(PasswordItem newPassList, dynamic token) async {
+    if (await Create(newPassList.title, newPassList.username,
+        newPassList.password, newPassList.website, newPassList.notes, token)) {
+      // Fetch the updated list of passwords
+      await fetchdata(token);
+    }
   }
 
   void _showAddPasswordDialog() {
@@ -120,35 +117,17 @@ class _MyHomeState extends State<MyHomePage> {
           actions: [
             ElevatedButton(
               onPressed: () async {
-                if (await Create(
-                    await EncryptDecrypt().encryptAES(
-                      titleController.text,
-                      token,
-                    ),
-                    await EncryptDecrypt().encryptAES(
-                      usernameController.text,
-                      token,
-                    ),
-                    await EncryptDecrypt().encryptAES(
-                      passwordController.text,
-                      token,
-                    ),
-                    await EncryptDecrypt().encryptAES(
-                      websiteController.text,
-                      token,
-                    ),
-                    await EncryptDecrypt().encryptAES(
-                      notesController.text,
-                      token,
-                    ),
-                    token)) {
-                  setState(
-                    () {
-                      fetchdata(token);
-                    },
-                  );
-                  Navigator.of(context).pop();
-                }
+                PasswordItem PassList = await EncryptDecrypt().encryptAES(
+                    titleController.text,
+                    usernameController.text,
+                    passwordController.text,
+                    websiteController.text,
+                    notesController.text,
+                    token);
+
+                await _addPasswordItem(PassList, token);
+
+                Navigator.of(context).pop();
               },
               child: Text('Add'),
             ),
@@ -204,7 +183,7 @@ class PasswordItem {
   String title;
   String username;
   String password;
-  String website;
+  dynamic website;
   String notes;
 
   PasswordItem(
@@ -215,3 +194,17 @@ class PasswordItem {
       required this.notes});
 }
 
+class EncryptedPasswordItem {
+  dynamic title;
+  dynamic username;
+  dynamic password;
+  dynamic website;
+  dynamic notes;
+
+  EncryptedPasswordItem(
+      {required this.title,
+      required this.username,
+      required this.password,
+      required this.website,
+      required this.notes});
+}

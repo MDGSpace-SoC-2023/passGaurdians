@@ -4,6 +4,7 @@ from authentication.serializers import UserSerializer
 
 class PasswordStorageSerializer(serializers.ModelSerializer):
     user=UserSerializer(read_only=True)
+    website=serializers.URLField(required=False,allow_blank=True,allow_null=True)
     class Meta:
         model=PasswordStorage
         fields=['title','username','password','website','details','user']

@@ -4,6 +4,7 @@ import 'package:passGuard/api_connection/auth_api.dart';
 import 'dart:typed_data';
 import 'dart:convert';
 import 'package:cryptography/cryptography.dart';
+import 'package:passGuard/screens/homepage.dart';
 
 class EncryptDecrypt {
   static const int iterations = 10000;
@@ -48,20 +49,68 @@ class EncryptDecrypt {
     return EncryptInfo(key, iv, encrypter);
   }
 
-  Future encryptAES(text, token) async {
+  Future encryptAES(String title, String username, dynamic password,
+      dynamic website, String details, String token) async {
     final response = await UserInfo(token);
     final info =
         await deriveKeyAndIV(response.password, response.salt, response.email);
-    final encrypted = info.encrypter.encrypt(text, iv: info.iv);
-    return encrypted.base64;
+    final key = info.key;
+    final iv = info.iv;
+    final encrypter = info.encrypter;
+    String Title =
+        title.isNotEmpty ? encrypter.encrypt(title, iv: iv).base64 : "";
+    print("title done");
+    print(username);
+    String Username =
+        username.isNotEmpty ? encrypter.encrypt(username, iv: iv).base64 : "";
+    print("username done");
+    String Password =
+        password.isNotEmpty ? encrypter.encrypt(password, iv: iv).base64 : "";
+    print("password done");
+    dynamic Website =
+        website.isNotEmpty ? encrypter.encrypt(website, iv: iv).base64 : "";
+    print("website done");
+    String Details =
+        details.isNotEmpty ? encrypter.encrypt(details, iv: iv).base64 : "";
+    print("details done");
+    return PasswordItem(
+        title: Title,
+        username: Username,
+        password: Password,
+        website: Website,
+        notes: Details);
   }
 
-  Future decryptAES(text, token) async {
+    Future decryptAES(dynamic title, dynamic username, dynamic password,
+      dynamic website, dynamic details, String token) async {
     final response = await UserInfo(token);
     final info =
         await deriveKeyAndIV(response.password, response.salt, response.email);
-    final decrypted = info.encrypter.decrypt(text, iv: info.iv);
-    return decrypted;
+    final key = info.key;
+    final iv = info.iv;
+    final encrypter = info.encrypter;
+    String Title =
+        title.isNotEmpty ? encrypter.decrypt64(title, iv: iv) : "";
+    print("title done");
+    print(username);
+    String Username =
+        username.isNotEmpty ? encrypter.decrypt64(username, iv: iv): "";
+    print("username done");
+    String Password =
+        password.isNotEmpty ? encrypter.decrypt64(password, iv: iv): "";
+    print("password done");
+    dynamic Website =
+        website.isNotEmpty ? encrypter.decrypt64(website, iv: iv) : "";
+    print("website done");
+    String Details =
+        details.isNotEmpty ? encrypter.decrypt64(details, iv: iv) : "";
+    print("details done");
+    return PasswordItem(
+        title: Title,
+        username: Username,
+        password: Password,
+        website: Website,
+        notes: Details);
   }
 }
 

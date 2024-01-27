@@ -4,11 +4,17 @@ import 'package:encrypt/encrypt.dart';
 import 'package:http/http.dart' as http;
 import 'package:passGuard/api_connection/auth_api.dart';
 
-Future Create(String title, String username, String password, String website,
+Future Create(String title, String username, String password, dynamic website,
     String details, String token) async {
   var uriListCreate =
       Uri.parse("http://127.0.0.1:8000/passwordStorageApp/create/");
   String csrfToken = await getCsrfToken();
+  print(title);
+  print(username);
+  print(password);
+  print(website);
+  print(details);
+  print(token);
   var res = await http.post(uriListCreate,
       body: jsonEncode({
         "title": title,
@@ -77,8 +83,7 @@ Future Update(String title, String username, dynamic password, String website,
 }
 
 Future ListPasswords(String token) async {
-  var uri =
-      Uri.parse("http://127.0.0.1:8000/passwordStorageApp/create/");
+  var uri = Uri.parse("http://127.0.0.1:8000/passwordStorageApp/create/");
 
   String csrfToken = await getCsrfToken();
   print(token);
