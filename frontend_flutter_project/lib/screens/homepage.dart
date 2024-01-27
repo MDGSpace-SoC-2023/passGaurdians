@@ -100,9 +100,22 @@ class _MyHomeState extends State<MyHomePage> {
                 controller: usernameController,
                 decoration: InputDecoration(labelText: 'Username'),
               ),
-              TextField(
-                controller: passwordController,
-                decoration: InputDecoration(labelText: 'Password'),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: passwordController,
+                      decoration: InputDecoration(labelText: 'Password'),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      String generatedPassword = generateRandomPassword();
+                      passwordController.text = generatedPassword;
+                    },
+                    child: Text('Generate'),
+                  ),
+                ],
               ),
               TextField(
                 controller: websiteController,
