@@ -1,10 +1,10 @@
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 
-const MethodChannel _channel = MethodChannel('passGuardChannel');
+// const MethodChannel _channel = MethodChannel('passGuardChannel');
 
-class PassGuardChannel{
-  static Future<void> onPasswordDetected(String password)async{
-    return _channel.invokeMethod('onPasswordDetected',password);
-  }
-}
+// class PassGuardChannel{
+//   static Future<void> onPasswordDetected(String password)async{
+//     return _channel.invokeMethod('onPasswordDetected',password);
+//   }
+// }
 

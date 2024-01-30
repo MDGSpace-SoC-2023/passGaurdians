@@ -11,7 +11,11 @@ from rest_framework.authtoken.models import Token
 from .models import User
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import RedirectView
 # Create your views here.
+
+redirect_url="http://127.0.0.1:8000"
 
 class NewLoginView(LoginView):
     serializer_class=NewLoginSerializer
@@ -62,5 +66,10 @@ class getUserInfo(generics.ListAPIView):
 
 class GoogleLogin(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
-    #callback_url = CALLBACK_URL_YOU_SET_ON_GOOGLE
+    callback_url = redirect_url
     client_class = OAuth2Client
+
+class UserRedirectView(LoginRequiredMixin, RedirectView):
+    permanent = False
+    def get_redirect_url(self):
+        return "redirect-url"

@@ -112,9 +112,9 @@ SOCIALACCOUNT_PROVIDERS = {
         # (``socialaccount`` app) containing the required client
         # credentials, or list them here:
         'APP': {
-            'client_id': '123',
-            'secret': '456',
-            'key': ''
+            'client_id': '686474956620-q67ujpeg3tpohkipoovvqrvnmpf5f0qp.apps.googleusercontent.com',
+            # 'secret': '',
+            # 'key': ''
         }
     }
 }
@@ -203,5 +203,5 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD=None
 ACCOUNT_USERNAME_REQUIRED=False
 #USERNAME_REQUIRED=False
 #EMAIL_REQUIRED=True
-ACCOUNT_EMAIL_VERIFICATION=None
+#ACCOUNT_EMAIL_VERIFICATION=None
 ACCOUNT_CONFIRM_EMAIL_ON_GET=False
