@@ -91,73 +91,81 @@ class _MyHomeState extends State<MyHomePage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Add Password'),
-          content: Column(children: [ ListView(
-            shrinkWrap: true,
-                children: [
-                  TextField(
-                    controller: titleController,
-                    decoration: InputDecoration(labelText: 'Title'),
+  title: Text('Add Password'),
+  content: SingleChildScrollView(
+    scrollDirection: Axis.vertical,
+    child: ListBody(
+      children: <Widget>[
+        TextField(
+          controller: titleController,
+          decoration: InputDecoration(labelText: 'Title'),
+        ),TextField(
+          controller: usernameController,
+          decoration: InputDecoration(labelText: 'Username'),
+        ),
+        Container(
+          height: 50.0, 
+          child: Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: passwordController,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
                   ),
-                  Container(
-                    width: double.infinity,
-                    height: 50.0,
-                    child: Row(
-                      children: [
-                        TextField(
-                          controller: passwordController,
-                          decoration: InputDecoration(
-                            labelText: 'Password',
-                          ),
-                          obscureText: !showPassword,
-                        ),
-                        Checkbox(
-                          value: showPassword,
-                          onChanged: (value) {
-                            setState(() {
-                              showPassword = value!;
-                            });
-                          },
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            String generatedPassword = generateRandomPassword();
-                            passwordController.text = generatedPassword;
-                          },
-                          child: Text('Generate'),
-                        ),
-                      ],
-                    ),
-                  ),
-                  TextField(
-                    controller: websiteController,
-                    decoration: InputDecoration(labelText: 'Website'),
-                  ),
-                  TextField(
-                    controller: notesController,
-                    decoration: InputDecoration(labelText: 'Notes'),
-                  ),
-                ],
+                  obscureText: !showPassword,
+                ),
               ),
-         ],), actions: [
-            ElevatedButton(
-              onPressed: () async {
-                PasswordItem PassList = await EncryptDecrypt().encryptAES(
-                    titleController.text,
-                    usernameController.text,
-                    passwordController.text,
-                    websiteController.text,
-                    notesController.text,
-                    token);
-
-                await _addPasswordItem(PassList, token);
-
-                Navigator.of(context).pop();
-              },
-              child: Text('Add'),
-            ),
-          ],
+              Checkbox(
+                value: showPassword,
+                onChanged: (value) {
+                  setState(() {
+                    showPassword = value!;
+                  });
+                },
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  String generatedPassword = generateRandomPassword();
+                  passwordController.text = generatedPassword;
+                },
+                child: Text('Generate'),
+              ),
+            ],
+          ),
+        ),
+        TextField(
+          controller: websiteController,
+          decoration: InputDecoration(labelText: 'Website'),
+        ),
+        TextField(
+          controller: notesController,
+          decoration: InputDecoration(labelText: 'Notes'),
+        ),
+      ],
+    ),
+  ),
+  actions: <Widget>[
+    ElevatedButton(
+      onPressed: () async {
+        PasswordItem PassList = await EncryptDecrypt().encryptAES(
+          titleController.text,
+          usernameController.text,
+          passwordController.text,
+          websiteController.text,
+          notesController.text,
+          token,
         );
+
+        await _addPasswordItem(PassList, token);
+
+        Navigator.of(context).pop();
+      },
+      child: Text('Add'),
+    ),
+  ],
+);
+
       },
     );
   }
@@ -195,24 +203,24 @@ class _MyHomeState extends State<MyHomePage> {
                   );
                 },
               ),
-        // bottomNavigationBar: BottomNavigationBar(
-        //   // currentIndex: _currentIndex,
-        //   // onTap: (index) {
-        //   //   setState(() {
-        //   //     _currentIndex = index;
-        //   //   });
-        //   // },
-        //   items: [
-        //     BottomNavigationBarItem(
-        //       icon: Icon(Icons.home),
-        //       label: 'Home',
-        //     ),
-        //     BottomNavigationBarItem(
-        //       icon: Icon(Icons.person),
-        //       label: 'Profile',
-        //     ),
-        //   ],
-        // ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Profile',
+            ),
+          ],
+        ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             _showAddPasswordDialog();

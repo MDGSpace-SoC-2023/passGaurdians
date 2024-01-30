@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:google_sign_in/google_sign_in.dart';
 
 
 Future getCsrfToken() async {
@@ -128,52 +127,52 @@ class UserResponse {
   UserResponse(this.password, this.salt, this.email);
 }
 
-Future googlelogin() async {
-  GoogleSignInAccount? googleSignInAccount = await GoogleSignIn().signIn();
+// Future googlelogin() async {
+//   GoogleSignInAccount? googleSignInAccount = await GoogleSignIn().signIn();
 
-    if (googleSignInAccount == null) {
-      return;
-    }
+//     if (googleSignInAccount == null) {
+//       return;
+//     }
 
-    GoogleSignInAuthentication googleSignInAuthentication =
-        await googleSignInAccount.authentication;
+//     GoogleSignInAuthentication googleSignInAuthentication =
+//         await googleSignInAccount.authentication;
     
-    String accessToken = googleSignInAuthentication.accessToken!;
-    String idToken = googleSignInAuthentication.idToken!;
+//     String accessToken = googleSignInAuthentication.accessToken!;
+//     String idToken = googleSignInAuthentication.idToken!;
 
-    print("Access Token: $accessToken");
-    print("ID Token: $idToken");
+//     print("Access Token: $accessToken");
+//     print("ID Token: $idToken");
 
-  var uriLogin = Uri.parse("http://127.0.0.1:8000/user/google/login/");
-  String csrfToken = await getCsrfToken();
-  var res = await http.post(uriLogin,
-      // body: jsonEncode({
-      //   'email': email,
-      //   'password': password,
-      // }),
-      headers: {
-        "Referer": "http://127.0.0.1:8000",
-        "X-CSRFToken": csrfToken,
-        'Authorization': 'Token $accessToken',
-        'Content-Type': 'application/json'
-      });
+//   var uriLogin = Uri.parse("http://127.0.0.1:8000/user/google/login/");
+//   String csrfToken = await getCsrfToken();
+//   var res = await http.post(uriLogin,
+//       // body: jsonEncode({
+//       //   'email': email,
+//       //   'password': password,
+//       // }),
+//       headers: {
+//         "Referer": "http://127.0.0.1:8000",
+//         "X-CSRFToken": csrfToken,
+//         'Authorization': 'Token $accessToken',
+//         'Content-Type': 'application/json'
+//       });
 
-  print(res.body);
-  print(res.statusCode);
-  if ((res.statusCode == 200) ||
-      (res.statusCode == 201) ||
-      (res.statusCode == 202) ||
-      (res.statusCode == 203) ||
-      (res.statusCode == 204)) {
-    var data = json.decode(res.body);
-    var token = data['token'];
-    // print("got token in userlogin");
-    // print("Login Successful");
-    print("login done");
-    print(token);
-    return LoginResponse(token, true);
-  } else {
-    print("Some Error Occured. Login is denied");
-    return LoginResponse("", false);
-  }
-}
+//   print(res.body);
+//   print(res.statusCode);
+//   if ((res.statusCode == 200) ||
+//       (res.statusCode == 201) ||
+//       (res.statusCode == 202) ||
+//       (res.statusCode == 203) ||
+//       (res.statusCode == 204)) {
+//     var data = json.decode(res.body);
+//     var token = data['token'];
+//     // print("got token in userlogin");
+//     // print("Login Successful");
+//     print("login done");
+//     print(token);
+//     return LoginResponse(token, true);
+//   } else {
+//     print("Some Error Occured. Login is denied");
+//     return LoginResponse("", false);
+//   }
+// }
