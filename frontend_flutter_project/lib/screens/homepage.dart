@@ -153,14 +153,15 @@ class _MyHomeState extends State<MyHomePage> {
                     notesController.text,
                     token);
 
-                await _addPasswordItem(PassList, token);
+        await _addPasswordItem(PassList, token);
 
-                Navigator.of(context).pop();
-              },
-              child: Text('Add'),
-            ),
-          ],
-        );
+        Navigator.of(context).pop();
+      },
+      child: Text('Add'),
+    ),
+  ],
+);
+
       },
     );
   }

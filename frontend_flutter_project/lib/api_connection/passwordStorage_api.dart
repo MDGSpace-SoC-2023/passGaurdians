@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:encrypt/encrypt.dart';
 import 'package:http/http.dart' as http;
 import 'package:passGuard/api_connection/auth_api.dart';
 
