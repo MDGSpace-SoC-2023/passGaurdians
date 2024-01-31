@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+
 import 'package:passGuard/api_connection/auth_api.dart';
 
 class MyLogin extends StatefulWidget {
@@ -98,16 +98,15 @@ class _MyLoginState extends State<MyLogin> {
                           Container(
                             alignment: Alignment.bottomLeft,
                             child:ElevatedButton.icon(
-                            onPressed: ()
-                              async {
+                            onPressed: (){
                                     
-                                    LoginResponse response = await googlelogin();
-                                    if (response.auth) {
-                                      Navigator.pushNamed(context, 'home',
-                                          arguments: response.token);
-                                    } else {
-                                      print("Google Login Api unsuccessful");
-                                    }
+                                    // LoginResponse response = await googlelogin();
+                                    // if (response.auth) {
+                                    //   Navigator.pushNamed(context, 'home',
+                                    //       arguments: response.token);
+                                    // } else {
+                                    //   print("Google Login Api unsuccessful");
+                                    // }
                                   },
                             icon: Icon(Icons.login),
                             label: Text('Login Using Google'),

@@ -12,7 +12,7 @@ class AutoLock extends StatefulWidget {
 
 class _AutoLockState extends State<AutoLock> {
   Timer? timer;
-  final Duration inactivityDuration = Duration(seconds: 60000);
+  final Duration inactivityDuration = Duration(seconds: 120);
 
   @override
   void initState() {
