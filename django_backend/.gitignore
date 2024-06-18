@@ -1,0 +1,17 @@
+# Database
+db.sqlite3
+
+# Env
+env_django_passGuard/
+myenv/
+.env
+
+# Python
+*.pyc
+*~
+__pycache__
+
+# Visual Studio
+.vscode/
+.history/
+*.code-workspace

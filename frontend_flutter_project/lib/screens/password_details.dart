@@ -31,7 +31,7 @@ class PasswordDetailsPageState extends State<PasswordDetailsPage> {
                       showPassword
                           ? widget.passwordItem.password
                           : '*' * widget.passwordItem.password.length,
-                      // You can customize the styling here as needed
+                     
                     ),
                   ),
                   IconButton(
