@@ -99,6 +99,9 @@ class _MyHomeState extends State<MyHomePage> {
                 TextField(
                   controller: titleController,
                   decoration: InputDecoration(labelText: 'Title'),
+                ),TextField(
+                  controller: usernameController,
+                  decoration: InputDecoration(labelText: 'Username'),
                 ),
                 Container(
                   height: 50.0, 
